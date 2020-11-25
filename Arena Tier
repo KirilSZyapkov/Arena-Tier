@@ -52,7 +52,7 @@ function arenaTier(input) {
         });
         element[1] = totalPoints;
     });
-    sorted.sort((a, b) => b[1] - a[1]);
+    sorted.sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
 
     for (let inputElement of sorted) {
         let [name, powerPoints] = inputElement;
