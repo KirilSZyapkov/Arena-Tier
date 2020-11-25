@@ -33,7 +33,7 @@ function arenaTier(input) {
                         let powerB = b[0][b[0].indexOf(spell[0]) + 1];
                         if (powerA > powerB) {
                             delete gladiators[gladiatorB];
-                        } else {
+                        } else if (powerA < powerB){
                             delete gladiators[gladiatorA];
                         }
 
