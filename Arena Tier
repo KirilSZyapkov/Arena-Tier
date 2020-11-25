@@ -1,0 +1,67 @@
+function arenaTier(input) {
+    let gladiators = {};
+    let comand = input.shift();
+
+    while (comand !== "Ave Cesar") {
+
+        if (!comand.includes(" vs ")) {
+            let [gladiatorName, skill, skillPonts] = comand.split(` -> `);
+            skillPonts = Number(skillPonts);
+            if (!gladiators.hasOwnProperty(gladiatorName)) {
+                gladiators[gladiatorName] = {};
+            }
+            let token = gladiators[gladiatorName];
+            if (token.hasOwnProperty(skill)) {
+                let newPoints = skillPonts;
+                if (newPoints > token[skill]) {
+                    token[skill] = newPoints;
+
+                }
+            } else {
+                token[skill] = skillPonts;
+            }
+
+            comand = input.shift();
+        } else {
+            let [gladiatorA, gladiatorB] = comand.split(` vs `);
+            if (gladiators.hasOwnProperty(gladiatorA) && gladiators.hasOwnProperty(gladiatorB)) {
+                let a = Object.entries(gladiators[gladiatorA]);
+                let b = Object.entries(gladiators[gladiatorB]);
+                for (let spell of a) {
+                    if (b[0].includes(spell[0])) {
+                        let powerA = spell[1];
+                        let powerB = b[0][b[0].indexOf(spell[0]) + 1];
+                        if (powerA > powerB) {
+                            delete gladiators[gladiatorB];
+                        } else {
+                            delete gladiators[gladiatorA];
+                        }
+
+                    }
+                }
+
+            }
+            comand = input.shift();
+        }
+
+    }
+    let sorted = Object.entries(gladiators);
+    sorted.forEach(element => {
+        let totalPoints = Object.values(element[1]).reduce((a, b) => {
+            return a + b
+        });
+        element[1] = totalPoints;
+    });
+    sorted.sort((a, b) => b[1] - a[1]);
+
+    for (let inputElement of sorted) {
+        let [name, powerPoints] = inputElement;
+        console.log(`${name}: ${powerPoints} skill`);
+        let spells = Object.entries(gladiators[name]);
+        spells.sort((a,b)=>b[1]-a[1] || a[0].localeCompare(b[0]));
+        for(let key of spells){
+            console.log(`- ${key[0]} <!> ${key[1]}`);
+        }
+
+    }
+}
