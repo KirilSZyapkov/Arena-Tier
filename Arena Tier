@@ -33,7 +33,7 @@ function arenaTier(input) {
                         let powerB = b[0][b[0].indexOf(spell[0]) + 1];
                         if (powerA > powerB) {
                             delete gladiators[gladiatorB];
-                        } else if (powerA < powerB){
+                        } else if (powerA < powerB) {
                             delete gladiators[gladiatorA];
                         }
 
@@ -58,8 +58,8 @@ function arenaTier(input) {
         let [name, powerPoints] = inputElement;
         console.log(`${name}: ${powerPoints} skill`);
         let spells = Object.entries(gladiators[name]);
-        spells.sort((a,b)=>b[1]-a[1] || a[0].localeCompare(b[0]));
-        for(let key of spells){
+        spells.sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+        for (let key of spells) {
             console.log(`- ${key[0]} <!> ${key[1]}`);
         }
 
